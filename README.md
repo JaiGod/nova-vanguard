@@ -1,6 +1,14 @@
 # Nova Vanguard
 
+![Nova Vanguard banner](docs/media/banner.png)
+
 **A polished arcade 3D space shooter built in Unity 6 for PC, Android, iOS and WebGL.**
+
+<p align="center">
+  <img src="docs/media/gameplay.gif" alt="Nova Vanguard gameplay animation: Alien Territory waves, then the Final War Zone boss" width="800">
+</p>
+
+<p align="center"><b>▶ <a href="docs/media/gameplay.mp4">Watch the gameplay video (MP4)</a></b> &nbsp;·&nbsp; <a href="https://github.com/jaineil32624/nova-vanguard/raw/main/docs/media/gameplay.mp4">direct download</a></p>
 
 Fly through seven sectors of escalating chaos: asteroid belts, alien territory, blinding nebulae, ancient machine worlds and a dark-matter sector where gravity itself is the enemy. Four primary weapons, four secondaries, four ultimates, seven unlockable ships, a persistent upgrade tree and seven multi-phase bosses with shield generators and weak points.
 
@@ -35,6 +43,22 @@ Fly through seven sectors of escalating chaos: asteroid belts, alien territory, 
 If anything looks off, run **Nova Vanguard → Run Project Setup** from the menu bar.
 
 Full guides: [Installation](docs/INSTALLATION.md) · [Controls](docs/CONTROLS.md) · [Building](docs/BUILD.md) · [Architecture](docs/ARCHITECTURE.md) · [API](docs/API.md) · [Release notes](docs/RELEASE_NOTES.md)
+
+---
+
+## Screenshots
+
+| Sector 1 – Training Galaxy | Sector 2 – Asteroid Belt |
+|---|---|
+| ![Training Galaxy](docs/media/sector1_training.png) | ![Asteroid Belt](docs/media/sector2_asteroids.png) |
+| **Sector 4 – Nebula Zone** | **Sector 6 – Dark Matter Sector** |
+| ![Nebula Zone](docs/media/sector4_nebula.png) | ![Dark Matter Sector](docs/media/sector6_dark_matter.png) |
+
+![Final War Zone boss fight with shield generators, core weak point and boss health bar](docs/media/boss_final_war.png)
+
+![The seven unlockable ships](docs/media/ships.png)
+
+> The images and video in `docs/media` are rendered from the game's own colour palettes, ship silhouettes and HUD layout to preview the look and feel. Replace them with in-engine captures (Window → General → Recorder, or your platform's screen capture) once you have built the project locally.
 
 ---
 
