@@ -72,7 +72,6 @@ namespace NovaVanguard.Editor
             PlayerSettings.WebGL.template = "APPLICATION:Minimal";
             PlayerSettings.SetGraphicsAPIs(BuildTarget.Android, new[] { GraphicsDeviceType.Vulkan, GraphicsDeviceType.OpenGLES3 });
             PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.Android, false);
-            PlayerSettings.gpuSkinning = false;
             // Both input backends: the game supports the new Input System and falls back to the legacy manager.
             var psAssets = AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/ProjectSettings.asset");
             if (psAssets != null && psAssets.Length > 0)
@@ -92,6 +91,9 @@ namespace NovaVanguard.Editor
             if (renderer == null)
             {
                 renderer = ScriptableObject.CreateInstance<UniversalRendererData>();
+                // Load the renderer's shader/post-process resources (postProcessData is null on a raw CreateInstance,
+                // which silently disables the Volume post-processing that PostFx relies on).
+                ResourceReloader.ReloadAllNullIn(renderer, UniversalRenderPipelineAsset.packagePath);
                 renderer.renderingMode = RenderingMode.Forward;
                 renderer.depthPrimingMode = DepthPrimingMode.Disabled;
                 AssetDatabase.CreateAsset(renderer, rendererPath);
@@ -108,8 +110,13 @@ namespace NovaVanguard.Editor
             pipeline.supportsCameraDepthTexture = false;
             pipeline.supportsCameraOpaqueTexture = false;
             pipeline.shadowDistance = 0f;
-            pipeline.mainLightRenderingMode = LightRenderingMode.PerPixel;
-            pipeline.additionalLightsRenderingMode = LightRenderingMode.PerVertex;
+            // mainLightRenderingMode / additionalLightsRenderingMode have internal setters in URP, so go through serialization.
+            var pso = new SerializedObject(pipeline);
+            var mainMode = pso.FindProperty("m_MainLightRenderingMode");
+            var addMode = pso.FindProperty("m_AdditionalLightsRenderingMode");
+            if (mainMode != null) mainMode.intValue = (int)LightRenderingMode.PerPixel;
+            if (addMode != null) addMode.intValue = (int)LightRenderingMode.PerVertex;
+            pso.ApplyModifiedPropertiesWithoutUndo();
             pipeline.maxAdditionalLightsCount = 4;
             EditorUtility.SetDirty(pipeline);
             GraphicsSettings.defaultRenderPipeline = pipeline;
