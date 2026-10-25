@@ -62,7 +62,7 @@ namespace NovaVanguard.Editor
             PlayerSettings.allowedAutorotateToLandscapeRight = true;
             PlayerSettings.colorSpace = ColorSpace.Linear;
             PlayerSettings.runInBackground = true;
-            PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel24;
+            PlayerSettings.Android.minSdkVersion = (AndroidSdkVersions)25;
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64 | AndroidArchitecture.ARMv7;
             PlayerSettings.SetScriptingBackend(NamedBuildTarget.Android, ScriptingImplementation.IL2CPP);
             PlayerSettings.SetScriptingBackend(NamedBuildTarget.iOS, ScriptingImplementation.IL2CPP);
@@ -120,7 +120,10 @@ namespace NovaVanguard.Editor
             pipeline.maxAdditionalLightsCount = 4;
             EditorUtility.SetDirty(pipeline);
             GraphicsSettings.defaultRenderPipeline = pipeline;
-            for (int i = 0; i < QualitySettings.names.Length; i++) QualitySettings.SetRenderPipelineAssetAt(i, pipeline);
+            // Per-quality-level override: null means "use the default pipeline", so clear any stale overrides.
+            int current = QualitySettings.GetQualityLevel();
+            for (int i = 0; i < QualitySettings.names.Length; i++) { QualitySettings.SetQualityLevel(i, false); QualitySettings.renderPipeline = pipeline; }
+            QualitySettings.SetQualityLevel(current, false);
             Debug.Log("[Nova Vanguard] URP configured.");
 #else
             Debug.LogWarning("[Nova Vanguard] URP package not found; the game will run on the Built-in pipeline (no bloom). Install com.unity.render-pipelines.universal and re-run setup.");

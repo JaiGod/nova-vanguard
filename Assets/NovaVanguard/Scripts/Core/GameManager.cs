@@ -166,7 +166,7 @@ namespace NovaVanguard
                 case HazardKind.LaserGate: LaserGate.Create(GameBounds.MaxZ + 1f, 12f); break;
                 case HazardKind.Wormhole: Wormhole.Create(GameBounds.RandomInUpperHalf(), 10f); break;
                 case HazardKind.BlackHole:
-                    if (FindObjectsOfType<BlackHoleEffect>().Length < 1)
+                    if (FindObjectsByType<BlackHoleEffect>(FindObjectsSortMode.None).Length < 1)
                         BlackHoleEffect.Create(GameBounds.RandomInUpperHalf(), new Color(0.5f, 0.3f, 1f), 9f, 12f, false);
                     break;
             }
@@ -293,11 +293,11 @@ namespace NovaVanguard
 
         void ClearWorldObjects()
         {
-            foreach (var b in FindObjectsOfType<Boss>()) Destroy(b.gameObject);
-            foreach (var b in FindObjectsOfType<BlackHoleEffect>()) Destroy(b.gameObject);
-            foreach (var b in FindObjectsOfType<LaserGate>()) Destroy(b.gameObject);
-            foreach (var b in FindObjectsOfType<Wormhole>()) Destroy(b.gameObject);
-            foreach (var b in FindObjectsOfType<Drone>()) Destroy(b.gameObject);
+            foreach (var b in FindObjectsByType<Boss>(FindObjectsSortMode.None)) Destroy(b.gameObject);
+            foreach (var b in FindObjectsByType<BlackHoleEffect>(FindObjectsSortMode.None)) Destroy(b.gameObject);
+            foreach (var b in FindObjectsByType<LaserGate>(FindObjectsSortMode.None)) Destroy(b.gameObject);
+            foreach (var b in FindObjectsByType<Wormhole>(FindObjectsSortMode.None)) Destroy(b.gameObject);
+            foreach (var b in FindObjectsByType<Drone>(FindObjectsSortMode.None)) Destroy(b.gameObject);
             Boss.CurrentReset();
         }
 

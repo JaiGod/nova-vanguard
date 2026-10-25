@@ -89,7 +89,7 @@ namespace NovaVanguard
 
         public static void EnsureEventSystem()
         {
-            if (Object.FindObjectOfType<EventSystem>() != null) return;
+            if (Object.FindFirstObjectByType<EventSystem>() != null) return;
             var es = new GameObject("EventSystem");
             es.AddComponent<EventSystem>();
 #if NOVA_INPUTSYSTEM && ENABLE_INPUT_SYSTEM
