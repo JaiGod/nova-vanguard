@@ -24,7 +24,8 @@ namespace NovaVanguard.Editor
         [MenuItem("Nova Vanguard/Build/Android APK")] public static void Android() { EditorUserBuildSettings.buildAppBundle = false; Build(BuildTarget.Android, $"Builds/Android/NovaVanguard-{Version}.apk"); }
         [MenuItem("Nova Vanguard/Build/Android AAB (Play Store)")] public static void AndroidBundle() { EditorUserBuildSettings.buildAppBundle = true; Build(BuildTarget.Android, $"Builds/Android/NovaVanguard-{Version}.aab"); }
         [MenuItem("Nova Vanguard/Build/iOS (Xcode project)")] public static void iOS() => Build(BuildTarget.iOS, "Builds/iOS");
-        [MenuItem("Nova Vanguard/Build/WebGL")] public static void WebGL() => Build(BuildTarget.WebGL, "Builds/WebGL");
+        /// <summary>WebGL build goes to docs/play so it is committed and served by GitHub Pages (github.io/nova-vanguard/play/).</summary>
+        [MenuItem("Nova Vanguard/Build/WebGL (to docs/play for GitHub Pages)")] public static void WebGL() => Build(BuildTarget.WebGL, "docs/play");
 
         [MenuItem("Nova Vanguard/Build/All Desktop + Android + WebGL")]
         public static void AllDesktopMobileWeb() { Windows(); Mac(); Linux(); Android(); WebGL(); }

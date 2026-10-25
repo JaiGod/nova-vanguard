@@ -69,6 +69,8 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Project-specific
+# The WebGL build in docs/play IS committed (served by GitHub Pages).
+!/docs/play/
 ProjectSettings/NovaSetupDone.txt
 *.keystore
 .DS_Store
