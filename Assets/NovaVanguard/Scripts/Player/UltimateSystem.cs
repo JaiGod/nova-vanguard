@@ -125,8 +125,11 @@ namespace NovaVanguard
             float k = Mathf.Clamp01(life / 1f);
             disk.localScale = new Vector3(5f, 0.02f, 5f) * Mathf.Min(1f, k + 0.2f);
             // continuous damage to units near the core
-            foreach (var u in Unit.All)
+            // Iterate by index (backwards): TakeDamage can kill a unit, which despawns it and removes it from Unit.All.
+            for (int i = Unit.All.Count - 1; i >= 0; i--)
             {
+                if (i >= Unit.All.Count) continue;
+                var u = Unit.All[i];
                 if (u == null || !u.IsAlive || u.team == source || u.team == Team.Neutral) continue;
                 float d = (u.transform.position - transform.position).magnitude;
                 if (d < 3f) u.TakeDamage(damage * dt * (player ? 1f : 0.5f), u.transform.position, source);

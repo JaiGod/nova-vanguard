@@ -87,11 +87,20 @@ namespace NovaVanguard
             if (damage <= 0f) return;
             hitSet.Clear();
             int n = Physics.OverlapSphereNonAlloc(pos, radius, hits, ~0, QueryTriggerInteraction.Collide);
+            // Collect first: TakeDamage can kill a unit whose death calls Explode again, which would
+            // overwrite the shared 'hits' buffer and 'hitSet' while we are still iterating them.
+            var victims = new List<Unit>(n);
             for (int i = 0; i < n; i++)
             {
                 var u = hits[i].GetComponentInParent<Unit>();
                 if (u == null || u.team == source || !hitSet.Add(u)) continue;
                 if (source == Team.Enemy && u.team == Team.Neutral) continue;
+                victims.Add(u);
+            }
+            for (int i = 0; i < victims.Count; i++)
+            {
+                var u = victims[i];
+                if (u == null || !u.IsAlive) continue;
                 float falloff = 1f - 0.5f * Mathf.Clamp01(Vector3.Distance(pos, u.transform.position) / radius);
                 u.TakeDamage(damage * falloff, pos, source);
             }
