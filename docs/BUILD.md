@@ -4,8 +4,8 @@ All builds go through `Assets/NovaVanguard/Editor/NovaBuild.cs`, available from 
 
 ```bash
 # headless examples (adjust the Unity path for your OS)
-UNITY="/Applications/Unity/Hub/Editor/6000.0.58f1/Unity.app/Contents/MacOS/Unity"   # macOS
-UNITY="C:\Program Files\Unity\Hub\Editor\6000.0.58f1\Editor\Unity.exe"                # Windows
+UNITY="/Applications/Unity/Hub/Editor/6000.0.47f1/Unity.app/Contents/MacOS/Unity"   # macOS
+UNITY="C:\Program Files\Unity\Hub\Editor\6000.0.47f1\Editor\Unity.exe"                # Windows
 
 "$UNITY" -batchmode -quit -projectPath . -logFile build.log -executeMethod NovaVanguard.Editor.NovaBuild.Windows
 "$UNITY" -batchmode -quit -projectPath . -logFile build.log -executeMethod NovaVanguard.Editor.NovaBuild.Android

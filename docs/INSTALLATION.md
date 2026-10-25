@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- **Unity 6** – 6000.0 LTS or newer (the project was authored against 6000.0.58f1; any 6000.x works, Unity will offer to upgrade).
+- **Unity 6** – 6000.0 LTS or newer (the project was authored against 6000.0.47f1; any 6000.x works, Unity will offer to upgrade).
 - Unity Hub 3.x.
 - Platform modules (install from Hub → Installs → ⚙ → Add modules):
   - **Android Build Support** (+ OpenJDK + Android SDK & NDK Tools) for APK/AAB
