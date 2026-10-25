@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nova Vanguard</title>
+<meta name="description" content="Nova Vanguard is an arcade space shooter built in Unity 6. Play it in your browser, or grab it for PC, Android and iOS.">
+<meta property="og:title" content="Nova Vanguard – arcade space shooter">
+<meta property="og:description" content="Seven sectors, seven bosses, four ultimates. Play free in your browser.">
+<meta property="og:image" content="https://jaineil32624.github.io/nova-vanguard/media/banner.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><polygon points='32,4 44,40 32,32 20,40' fill='%234adcff'/><polygon points='32,34 40,58 32,52 24,58' fill='%23ff9a3d'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --space:#070c1c; --space-2:#0c1430; --ion:#4adcff; --ion-dim:#2a8fb0; --hull:#e9f1ff; --hull-dim:#9fb0cc;
+    --flare:#ff9a3d; --boss:#ff4a3d; --credit:#ffd23f;
+    --max:1120px; --gutter:clamp(16px,4vw,40px);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{animation:none!important;transition:none!important}}
+  body{margin:0;background:var(--space);color:var(--hull);font:16px/1.6 Manrope,system-ui,sans-serif;overflow-x:hidden}
+  a{color:var(--ion)}
+  h1,h2,h3{font-family:"Chakra Petch",sans-serif;font-weight:700;line-height:1.05;margin:0}
+  h2{font-size:clamp(28px,4vw,44px);margin-bottom:14px}
+  p{max-width:62ch}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+  section{padding:clamp(56px,8vw,110px) 0}
+  :focus-visible{outline:3px solid var(--credit);outline-offset:3px}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;min-height:92vh;display:grid;align-items:end;isolation:isolate;overflow:hidden;padding-bottom:clamp(40px,6vw,80px)}
+  .hero video,.hero img.fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+  .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+    linear-gradient(180deg,rgba(7,12,28,.25) 0%,rgba(7,12,28,.55) 55%,var(--space) 100%)}
+  .hero .wrap{width:100%}
+  .title{font-size:clamp(52px,11vw,152px);letter-spacing:-.01em;color:var(--ion);
+    text-shadow:0 0 28px rgba(74,220,255,.45),0 0 2px #fff;transform:skewX(-6deg);display:inline-block}
+  .title small{display:block;font-size:.18em;letter-spacing:.32em;color:var(--hull);transform:skewX(6deg);margin-bottom:.4em;font-weight:600}
+  .lede{font-size:clamp(18px,2vw,22px);color:var(--hull);max-width:48ch;margin:18px 0 28px}
+  .actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:18px;
+    padding:14px 24px;border-radius:6px;text-decoration:none;border:2px solid transparent;transition:transform .12s ease,background .12s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-play{background:var(--ion);color:#041018;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);padding:16px 34px;font-size:20px}
+  .btn-play:hover{background:#7ee6ff}
+  .btn-ghost{border-color:rgba(233,241,255,.35);color:var(--hull)}
+  .btn-ghost:hover{border-color:var(--ion);color:var(--ion)}
+  .btn svg{width:20px;height:20px;flex:none}
+  .platforms{margin-top:22px;color:var(--hull-dim);font-size:14px;display:flex;gap:18px;flex-wrap:wrap}
+  .platforms span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ion);margin-right:8px;vertical-align:middle}
+
+  /* ---------- play panel ---------- */
+  .play-panel{background:var(--space-2);border:1px solid rgba(74,220,255,.2);border-radius:10px;padding:clamp(20px,3vw,34px);display:grid;gap:24px;grid-template-columns:1.2fr 1fr}
+  .play-panel h2{font-size:clamp(24px,3vw,34px)}
+  .play-panel .frame{aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#000;position:relative}
+  .play-panel .frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .play-panel .frame a{position:absolute;inset:0;display:grid;place-items:center;text-decoration:none}
+  .play-panel .frame a span{background:var(--ion);color:#041018;font:700 18px "Chakra Petch",sans-serif;padding:12px 22px;border-radius:999px;box-shadow:0 0 30px rgba(74,220,255,.6)}
+  .keys{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:15px;margin:14px 0 0}
+  .keys dt{color:var(--ion);font-family:"Chakra Petch",sans-serif;font-weight:600}
+  .keys dd{margin:0;color:var(--hull-dim)}
+  .status{font-size:14px;color:var(--hull-dim);margin-top:14px}
+
+  /* ---------- sectors ---------- */
+  .sectors{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:28px}
+  .sector{--c1:#1a4099;--c2:#4d1a80;min-height:220px;border-radius:6px;padding:14px 12px;display:flex;flex-direction:column;justify-content:flex-end;
+    background:linear-gradient(170deg,var(--c1),var(--c2) 70%,#05070f);position:relative;overflow:hidden;color:#fff}
+  .sector::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.18),transparent 40%)}
+  .sector b{font-family:"Chakra Petch",sans-serif;font-size:13px;letter-spacing:.06em;opacity:.8}
+  .sector strong{font-family:"Chakra Petch",sans-serif;font-size:17px;line-height:1.15;margin:4px 0 6px;position:relative}
+  .sector em{font-style:normal;font-size:12.5px;color:rgba(255,255,255,.78);position:relative}
+  .sector i{font-style:normal;font-size:12px;color:var(--boss);position:relative;margin-top:6px}
+
+  /* ---------- arsenal ---------- */
+  .arsenal{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+  .col h3{font-size:20px;color:var(--ion);margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--ion-dim)}
+  .col ul{list-style:none;margin:0;padding:0}
+  .col li{padding:9px 0;border-bottom:1px solid rgba(159,176,204,.15)}
+  .col li strong{display:block;font-family:"Chakra Petch",sans-serif;font-weight:600}
+  .col li span{color:var(--hull-dim);font-size:14.5px}
+
+  /* ---------- shots ---------- */
+  .shots{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:28px}
+  .shots figure{margin:0}
+  .shots img{width:100%;border-radius:8px;display:block;border:1px solid rgba(74,220,255,.15)}
+  .shots figcaption{font-size:14px;color:var(--hull-dim);margin-top:8px}
+  .shots .wide{grid-column:1/-1}
+
+  /* ---------- ships / builds ---------- */
+  .ships img{width:100%;border-radius:8px;margin-top:24px}
+  .builds{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:28px}
+  .build{background:var(--space-2);border:1px solid rgba(159,176,204,.18);border-radius:8px;padding:18px}
+  .build h3{font-size:18px;margin-bottom:6px}
+  .build p{font-size:14.5px;color:var(--hull-dim);margin:0 0 12px}
+  .build a{font-family:"Chakra Petch",sans-serif;font-weight:600;text-decoration:none}
+  code{font-family:ui-monospace,Consolas,monospace;font-size:.92em;background:rgba(255,255,255,.07);padding:2px 6px;border-radius:4px}
+
+  footer{padding:40px 0 60px;color:var(--hull-dim);font-size:14px;border-top:1px solid rgba(159,176,204,.15)}
+  footer a{color:var(--hull)}
+
+  @media (max-width:900px){
+    .play-panel{grid-template-columns:1fr}
+    .sectors{grid-template-columns:repeat(4,1fr)} .sector{min-height:170px}
+    .arsenal{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){
+    .sectors{grid-template-columns:repeat(2,1fr)}
+    .shots{grid-template-columns:1fr}
+    .hero{min-height:80vh}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <video autoplay muted loop playsinline poster="media/banner.png" aria-hidden="true">
+    <source src="media/gameplay.mp4" type="video/mp4">
+  </video>
+  <div class="wrap">
+    <h1 class="title"><small>Unity 6 arcade shooter</small>NOVA VANGUARD</h1>
+    <p class="lede">Seven sectors. Seven bosses with shields you have to break. Four ultimates that clear the screen. Easy to learn, hard to put down.</p>
+    <div class="actions">
+      <a class="btn btn-play" id="play-top" href="play/">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Play in your browser
+      </a>
+      <a class="btn btn-ghost" id="unity-top" href="https://play.unity.com/" rel="noopener">Play on Unity Play</a>
+      <a class="btn btn-ghost" href="https://github.com/jaineil32624/nova-vanguard" rel="noopener">Source on GitHub</a>
+    </div>
+    <div class="platforms"><span>Browser</span><span>Windows</span><span>macOS</span><span>Linux</span><span>Android</span><span>iOS</span></div>
+  </div>
+</header>
+
+<section id="play">
+  <div class="wrap">
+    <div class="play-panel">
+      <div>
+        <h2>Play now, no install</h2>
+        <p>The browser version runs right here on GitHub Pages. It's the same build that's on Unity Play, so pick whichever loads faster for you. Desktop recommended; mobile shows touch controls automatically.</p>
+        <dl class="keys">
+          <dt>Move</dt><dd>WASD or arrows</dd>
+          <dt>Aim / fire</dt><dd>Mouse, hold left click</dd>
+          <dt>Missiles</dt><dd>Right click or F</dd>
+          <dt>Boost</dt><dd>Shift</dd>
+          <dt>Ultimate</dt><dd>Space, once the purple bar is full</dd>
+          <dt>Weapons</dt><dd>1–4, or E / Q to cycle</dd>
+        </dl>
+        <p class="status" id="status">Loading takes a few seconds the first time; your progress saves in this browser.</p>
+      </div>
+      <div class="frame">
+        <img src="media/boss_final_war.png" alt="Nova Vanguard boss fight">
+        <a id="play-frame" href="play/" aria-label="Play Nova Vanguard in your browser"><span>▶ Launch game</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sectors">
+  <div class="wrap">
+    <h2>The flight plan</h2>
+    <p>Each sector adds something new to dodge and something bigger to kill. Clear the boss to unlock the next one and bank your credits.</p>
+    <div class="sectors">
+      <div class="sector" style="--c1:#1a4099;--c2:#4d1a80"><b>Sector 1</b><strong>Training Galaxy</strong><em>Scouts and fighters</em><i>Boss: Drill Sergeant</i></div>
+      <div class="sector" style="--c1:#804d1a;--c2:#33261a"><b>Sector 2</b><strong>Asteroid Belt</strong><em>Rocks that split, bombers</em><i>Boss: Rockjaw</i></div>
+      <div class="sector" style="--c1:#1a994d;--c2:#801a80"><b>Sector 3</b><strong>Alien Territory</strong><em>Interceptors hunt you</em><i>Boss: Hive Mother</i></div>
+      <div class="sector" style="--c1:#cc3399;--c2:#334de6"><b>Sector 4</b><strong>Nebula Zone</strong><em>Elites, zero visibility</em><i>Boss: Siren</i></div>
+      <div class="sector" style="--c1:#e69933;--c2:#3399cc"><b>Sector 5</b><strong>Ancient Machine World</strong><em>Pulsing laser gates</em><i>Boss: Archon</i></div>
+      <div class="sector" style="--c1:#4d1a99;--c2:#0d0d33"><b>Sector 6</b><strong>Dark Matter Sector</strong><em>Black holes, wormholes</em><i>Boss: Event Horizon</i></div>
+      <div class="sector" style="--c1:#e6331a;--c2:#661a66"><b>Sector 7</b><strong>Final War Zone</strong><em>Everything at once</em><i>Boss: Omega Tyrant</i></div>
+    </div>
+  </div>
+</section>
+
+<section id="arsenal">
+  <div class="wrap">
+    <h2>Your loadout</h2>
+    <p>Buy weapons with credits in the hangar, then switch between them mid-fight. Everything you unlock stays unlocked.</p>
+    <div class="arsenal">
+      <div class="col"><h3>Primary</h3><ul>
+        <li><strong>Laser Cannon</strong><span>Fast twin lasers that pierce one target.</span></li>
+        <li><strong>Plasma Gun</strong><span>Slow heavy bolts that splash on impact.</span></li>
+        <li><strong>Machine Gun</strong><span>Low damage, absurd fire rate.</span></li>
+        <li><strong>Pulse Cannon</strong><span>Five-way fan for crowds.</span></li></ul></div>
+      <div class="col"><h3>Secondary</h3><ul>
+        <li><strong>Missiles</strong><span>Dumb-fire pair, big boom.</span></li>
+        <li><strong>Homing Missiles</strong><span>Find the nearest target on their own.</span></li>
+        <li><strong>EMP Bomb</strong><span>Stuns enemies and erases their bullets.</span></li>
+        <li><strong>Cluster Rockets</strong><span>Burst into eight bomblets.</span></li></ul></div>
+      <div class="col"><h3>Ultimate</h3><ul>
+        <li><strong>Orbital Strike</strong><span>Satellite lances hit every enemy on screen.</span></li>
+        <li><strong>Energy Wave</strong><span>Expanding shockwave that deletes bullets.</span></li>
+        <li><strong>Black Hole Generator</strong><span>A singularity that devours enemies.</span></li>
+        <li><strong>Drone Swarm</strong><span>Six drones fight beside you for twelve seconds.</span></li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="shots">
+  <div class="wrap">
+    <h2>In the field</h2>
+    <div class="shots">
+      <figure><img src="media/sector1_training.png" alt="Sector 1, Training Galaxy" loading="lazy"><figcaption>Sector 1 opens with a short tutorial banner and gentle waves.</figcaption></figure>
+      <figure><img src="media/sector2_asteroids.png" alt="Sector 2, Asteroid Belt" loading="lazy"><figcaption>Asteroids split into debris when you shoot them.</figcaption></figure>
+      <figure><img src="media/sector4_nebula.png" alt="Sector 4, Nebula Zone" loading="lazy"><figcaption>Nebula Zone: elites with aimed bursts, bright on bright.</figcaption></figure>
+      <figure><img src="media/sector6_dark_matter.png" alt="Sector 6, Dark Matter Sector" loading="lazy"><figcaption>Dark Matter bends your bullets as much as theirs.</figcaption></figure>
+      <figure class="wide"><img src="media/boss_final_war.png" alt="Final War Zone boss fight" loading="lazy"><figcaption>Bosses keep their shield until every generator is gone; then the core takes double damage.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="ships" class="ships">
+  <div class="wrap">
+    <h2>Seven ships, two of them legendary</h2>
+    <p>Start in the balanced Vanguard. Earn the Swiftwing for speed, the Bulwark for armour, the Longbow for range, the Xel'Thar Seed for regenerating shields, and two legendary hulls for finishing the war.</p>
+    <img src="media/ships.png" alt="The seven ships: Vanguard, Swiftwing, Bulwark, Longbow, Xel'Thar Seed, Aurora Prime, Nova Sovereign" loading="lazy">
+  </div>
+</section>
+
+<section id="get">
+  <div class="wrap">
+    <h2>Get it for your platform</h2>
+    <p>Native builds come from the same project. Downloads appear on the GitHub releases page as they're published; the browser version is always current.</p>
+    <div class="builds">
+      <div class="build"><h3>Browser</h3><p>Nothing to install.</p><a href="play/">Play now</a></div>
+      <div class="build"><h3>Unity Play</h3><p>Same build, hosted by Unity, with its own leaderboard-style community page.</p><a id="unity-card" href="https://play.unity.com/" rel="noopener">Open on Unity Play</a></div>
+      <div class="build"><h3>Windows, macOS, Linux</h3><p>Zipped desktop builds.</p><a href="https://github.com/jaineil32624/nova-vanguard/releases" rel="noopener">Releases</a></div>
+      <div class="build"><h3>Android</h3><p>APK for sideloading; Play Store listing to follow.</p><a href="https://github.com/jaineil32624/nova-vanguard/releases" rel="noopener">Releases</a></div>
+      <div class="build"><h3>Build it yourself</h3><p>Clone, open in Unity 6, press Play. MIT licensed.</p><a href="https://github.com/jaineil32624/nova-vanguard#quick-start" rel="noopener">Quick start</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Nova Vanguard is made by Jaineil Rana (JaKing) with Unity 6 and the Universal Render Pipeline. Every model, effect, sound and music track is generated at runtime from code.
+    <a href="https://github.com/jaineil32624/nova-vanguard">github.com/jaineil32624/nova-vanguard</a>
+  </div>
+</footer>
+
+<script>
+  // When the Unity Play page exists, put its URL here and every "Unity Play" link updates.
+  const UNITY_PLAY_URL = "";
+  if (UNITY_PLAY_URL) for (const id of ["unity-top","unity-card"]) document.getElementById(id).href = UNITY_PLAY_URL;
+  // Hide the browser-play buttons gracefully if the build isn't uploaded yet.
+  fetch("play/index.html",{method:"HEAD"}).then(r=>{ if(!r.ok) throw 0; }).catch(()=>{
+    for (const id of ["play-top","play-frame"]) { const a=document.getElementById(id); a.textContent="Browser build coming soon"; a.removeAttribute("href"); a.style.opacity=.6; }
+    document.getElementById("status").textContent="The browser build is being uploaded. Check back shortly, or play on Unity Play.";
+  });
+</script>
+</body>
+</html>
