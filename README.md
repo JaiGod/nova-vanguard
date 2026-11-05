@@ -8,7 +8,7 @@
   <img src="docs/media/gameplay.gif" alt="Nova Vanguard gameplay animation: Alien Territory waves, then the Final War Zone boss" width="800">
 </p>
 
-<p align="center"><b>▶ <a href="docs/media/gameplay.mp4">Watch the gameplay video (MP4)</a></b> &nbsp;·&nbsp; <a href="https://github.com/jaineil32624/nova-vanguard/raw/main/docs/media/gameplay.mp4">direct download</a></p>
+<p align="center"><b>▶ <a href="docs/media/gameplay.mp4">Watch the gameplay video (MP4)</a></b> &nbsp;·&nbsp; <a href="https://github.com/JaiGod/nova-vanguard/raw/main/docs/media/gameplay.mp4">direct download</a></p>
 
 Fly through seven sectors of escalating chaos: asteroid belts, alien territory, blinding nebulae, ancient machine worlds and a dark-matter sector where gravity itself is the enemy. Four primary weapons, four secondaries, four ultimates, seven unlockable ships, a persistent upgrade tree and seven multi-phase bosses with shield generators and weak points.
 
@@ -29,7 +29,7 @@ Fly through seven sectors of escalating chaos: asteroid belts, alien territory, 
 1. Install **Unity 6** (6000.0.x or newer) through Unity Hub with the modules you want to build for (Android Build Support, iOS Build Support, WebGL Build Support).
 2. Clone this repository:
    ```bash
-   git clone https://github.com/jaineil32624/nova-vanguard.git
+   git clone https://github.com/JaiGod/nova-vanguard.git
    ```
 3. In Unity Hub choose **Add → Add project from disk** and pick the `nova-vanguard` folder. Open it.
 4. First open takes a minute while packages import. The editor script `NovaProjectSetup` then runs automatically and:
