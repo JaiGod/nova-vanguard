@@ -126,7 +126,7 @@
       <a class="btn btn-play" id="play-top" href="play/">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Play in your browser
       </a>
-      <a class="btn btn-ghost" id="unity-top" href="https://play.unity.com/" rel="noopener">Play on Unity Play</a>
+      <a class="btn btn-ghost" id="unity-top" href="https://play.unity.com/en/games/fd321b04-e852-4489-9777-7d402ad22f20/nova-vanguard" rel="noopener">Play on Unity Play</a>
       <a class="btn btn-ghost" href="https://github.com/jaineil32624/nova-vanguard" rel="noopener">Source on GitHub</a>
     </div>
     <div class="platforms"><span>Browser</span><span>Windows</span><span>macOS</span><span>Linux</span><span>Android</span><span>iOS</span></div>
@@ -224,7 +224,7 @@
     <p>Native builds come from the same project. Downloads appear on the GitHub releases page as they're published; the browser version is always current.</p>
     <div class="builds">
       <div class="build"><h3>Browser</h3><p>Nothing to install.</p><a href="play/">Play now</a></div>
-      <div class="build"><h3>Unity Play</h3><p>Same build, hosted by Unity, with its own leaderboard-style community page.</p><a id="unity-card" href="https://play.unity.com/" rel="noopener">Open on Unity Play</a></div>
+      <div class="build"><h3>Unity Play</h3><p>Same build, hosted by Unity, with its own leaderboard-style community page.</p><a id="unity-card" href="https://play.unity.com/en/games/fd321b04-e852-4489-9777-7d402ad22f20/nova-vanguard" rel="noopener">Open on Unity Play</a></div>
       <div class="build"><h3>Windows, macOS, Linux</h3><p>Zipped desktop builds.</p><a href="https://github.com/jaineil32624/nova-vanguard/releases" rel="noopener">Releases</a></div>
       <div class="build"><h3>Android</h3><p>APK for sideloading; Play Store listing to follow.</p><a href="https://github.com/jaineil32624/nova-vanguard/releases" rel="noopener">Releases</a></div>
       <div class="build"><h3>Build it yourself</h3><p>Clone, open in Unity 6, press Play. MIT licensed.</p><a href="https://github.com/jaineil32624/nova-vanguard#quick-start" rel="noopener">Quick start</a></div>
@@ -241,7 +241,7 @@
 
 <script>
   // When the Unity Play page exists, put its URL here and every "Unity Play" link updates.
-  const UNITY_PLAY_URL = "";
+  const UNITY_PLAY_URL = "https://play.unity.com/en/games/fd321b04-e852-4489-9777-7d402ad22f20/nova-vanguard";
   if (UNITY_PLAY_URL) for (const id of ["unity-top","unity-card"]) document.getElementById(id).href = UNITY_PLAY_URL;
   // Hide the browser-play buttons gracefully if the build isn't uploaded yet.
   fetch("play/index.html",{method:"HEAD"}).then(r=>{ if(!r.ok) throw 0; }).catch(()=>{
